@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Averun — Communication & Understanding, built with you</title>
+<meta name="description" content="Averun helps autistic people express themselves, understand social context, and navigate routines — on their own terms.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F3F4EF;
+    --paper-raised: #FFFFFF;
+    --ink: #1B2624;
+    --ink-soft: #4B5C58;
+    --ink-faint: #7C8A85;
+    --teal: #33645A;
+    --teal-deep: #234A42;
+    --teal-tint: #E3E8DE;
+    --ochre: #B8874F;
+    --ochre-tint: #F1E6D4;
+    --line: #D8DCD2;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  img, svg { max-width: 100%; display:block; }
+
+  .wrap{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  :focus-visible{
+    outline: 3px solid var(--ochre);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(243,244,239,0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 18px 0;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family: var(--font-display);
+    font-weight:700;
+    font-size: 1.25rem;
+    text-decoration:none;
+    letter-spacing: -0.01em;
+  }
+  .logo svg{ flex-shrink:0; }
+  .nav-links{
+    display:flex;
+    gap: 32px;
+    list-style:none;
+    margin:0; padding:0;
+    font-size: 0.95rem;
+    font-weight:500;
+  }
+  .nav-links a{ text-decoration:none; color: var(--ink-soft); transition: color .15s; }
+  .nav-links a:hover{ color: var(--teal); }
+  .nav-cta{
+    background: var(--teal);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 999px;
+    text-decoration:none;
+    font-weight:600;
+    font-size:0.92rem;
+    transition: background .15s;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{ background: var(--teal-deep); }
+  .nav-mobile-hide{ display:flex; }
+  @media (max-width: 780px){
+    .nav-mobile-hide{ display:none; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding: 88px 0 96px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 64px;
+    align-items:center;
+  }
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns: 1fr; gap: 48px; }
+    .hero{ padding: 56px 0 64px; }
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    background: var(--teal-tint);
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 24px;
+  }
+  h1{
+    font-family: var(--font-display);
+    font-size: clamp(2.3rem, 4.4vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin: 0 0 24px;
+    font-weight: 600;
+  }
+  h1 em{
+    font-style: normal;
+    color: var(--teal);
+  }
+  .hero-sub{
+    font-size: 1.13rem;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    margin: 0 0 36px;
+  }
+  .hero-actions{
+    display:flex;
+    gap: 16px;
+    flex-wrap:wrap;
+    margin-bottom: 20px;
+  }
+  .btn-primary{
+    background: var(--teal);
+    color:#fff;
+    border:none;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-weight:600;
+    font-size:1rem;
+    text-decoration:none;
+    display:inline-flex;
+    cursor:pointer;
+    transition: background .15s, transform .15s;
+  }
+  .btn-primary:hover{ background: var(--teal-deep); }
+  .btn-secondary{
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-weight:600;
+    font-size:1rem;
+    text-decoration:none;
+    display:inline-flex;
+    transition: border-color .15s, background .15s;
+  }
+  .btn-secondary:hover{ border-color: var(--teal); background: var(--paper-raised); }
+  .hero-note{
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- signature translation card ---------- */
+  .translate-card{
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: 0 1px 2px rgba(27,38,36,0.04);
+  }
+  .translate-card-label{
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    margin-bottom: 18px;
+  }
+  .bubble{
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-size: 1rem;
+    margin-bottom: 14px;
+    cursor: pointer;
+    border: 1px dashed var(--line);
+    background: var(--paper);
+    transition: border-color .2s, background .2s;
+  }
+  .bubble:hover, .bubble:focus-visible{ border-color: var(--ochre); }
+  .bubble-said{
+    font-weight: 500;
+  }
+  .bubble-arrow{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color: var(--ink-faint);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 4px 0 14px 4px;
+  }
+  .bubble-meant{
+    background: var(--teal-tint);
+    border: 1px solid transparent;
+    color: var(--teal-deep);
+  }
+  .bubble-meant .meant-text{
+    display:block;
+    max-height: 0;
+    overflow:hidden;
+    opacity:0;
+    transition: max-height .35s ease, opacity .3s ease;
+  }
+  .bubble-meant.revealed .meant-text{
+    max-height: 200px;
+    opacity:1;
+    margin-top: 6px;
+  }
+  .bubble-hint{
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    margin-top: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .bubble-meant .meant-text{ transition:none; }
+    .reveal{ transition:none !important; opacity:1 !important; transform:none !important; }
+  }
+
+  /* ---------- scroll reveal ---------- */
+  .reveal{
+    opacity:0;
+    transform: translateY(14px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* ---------- section shell ---------- */
+  section{ padding: 88px 0; }
+  .section-head{ max-width: 62ch; margin-bottom: 48px; }
+  .section-eyebrow{
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ochre);
+    margin-bottom: 12px;
+  }
+  h2{
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    font-weight:600;
+  }
+  .section-sub{ color: var(--ink-soft); font-size: 1.05rem; }
+
+  /* ---------- pillars ---------- */
+  .pillars{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 860px){ .pillars{ grid-template-columns: 1fr; } }
+  .pillar{
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 30px 26px;
+  }
+  .pillar-icon{
+    width: 40px; height: 40px;
+    margin-bottom: 18px;
+  }
+  .pillar-tag{
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--teal);
+    margin-bottom: 8px;
+    display:block;
+  }
+  .pillar h3{
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    margin: 0 0 10px;
+    font-weight:600;
+  }
+  .pillar p{
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+    margin: 0;
+  }
+
+  /* ---------- approach ---------- */
+  .approach{
+    background: var(--paper-raised);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .approach-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+  }
+  @media (max-width: 860px){ .approach-grid{ grid-template-columns: 1fr; gap: 32px; } }
+  .approach-list{
+    list-style:none;
+    margin:0; padding:0;
+    display:flex;
+    flex-direction:column;
+    gap: 22px;
+  }
+  .approach-list li{
+    padding-left: 28px;
+    position:relative;
+    color: var(--ink-soft);
+  }
+  .approach-list li::before{
+    content: '';
+    position:absolute;
+    left:0; top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ochre);
+  }
+  .approach-list strong{ color: var(--ink); display:block; margin-bottom:2px; font-family: var(--font-display); font-weight:600; }
+
+  /* ---------- privacy ---------- */
+  .privacy-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 860px){ .privacy-grid{ grid-template-columns: 1fr; } }
+  .privacy-item{
+    border-left: 2px solid var(--teal);
+    padding-left: 20px;
+  }
+  .privacy-item h4{
+    font-family: var(--font-display);
+    font-weight:600;
+    font-size: 1.02rem;
+    margin: 0 0 8px;
+  }
+  .privacy-item p{
+    color: var(--ink-soft);
+    font-size: 0.94rem;
+    margin:0;
+  }
+
+  /* ---------- early access ---------- */
+  .early-access{
+    background: var(--teal-deep);
+    color: #F3F4EF;
+    border-radius: 20px;
+    padding: 56px 48px;
+    margin: 0 0 0;
+  }
+  @media (max-width: 700px){ .early-access{ padding: 40px 26px; } }
+  .early-access h2{ color: #fff; }
+  .early-access .section-sub{ color: #C7D6D0; }
+  .early-access-eyebrow{ color: var(--ochre-tint); }
+  form.signup{
+    display:flex;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .signup input[type=email]{
+    flex: 1 1 260px;
+    padding: 14px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-size: 1rem;
+    font-family: var(--font-body);
+  }
+  .signup input[type=email]::placeholder{ color: #9FB4AE; }
+  .signup input[type=email]:focus-visible{ outline: 3px solid var(--ochre); outline-offset: 2px; }
+  .signup button{
+    background: var(--ochre);
+    color: var(--ink);
+    border:none;
+    padding: 14px 26px;
+    border-radius: 999px;
+    font-weight:700;
+    font-size:1rem;
+    cursor:pointer;
+    transition: background .15s;
+  }
+  .signup button:hover{ background: #C79A62; }
+  .form-note{
+    font-size: 0.82rem;
+    color: #9FB4AE;
+    margin-top: 12px;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    padding: 56px 0 40px;
+    border-top: 1px solid var(--line);
+    margin-top: 40px;
+  }
+  .footer-grid{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap: 24px;
+  }
+  .footer-brand{
+    font-family: var(--font-display);
+    font-weight:700;
+    font-size: 1.1rem;
+  }
+  .footer-tag{
+    color: var(--ink-faint);
+    font-size: 0.9rem;
+    margin-top: 6px;
+    max-width: 34ch;
+  }
+  .footer-links{
+    display:flex;
+    gap: 28px;
+    list-style:none;
+    padding:0; margin:0;
+    font-size: 0.9rem;
+  }
+  .footer-links a{ color: var(--ink-soft); text-decoration:none; }
+  .footer-links a:hover{ color: var(--teal); }
+  .footer-bottom{
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+        <circle cx="15" cy="15" r="14" stroke="#33645A" stroke-width="1.6"/>
+        <path d="M9 13.5C9 11 11 9 14 9C17.5 9 19.5 11.3 19.5 14C19.5 16.7 17.5 18.5 14.5 18.5C13.6 18.5 12.8 18.3 12.1 18L9 19L9.9 16.4C9.3 15.6 9 14.6 9 13.5Z" fill="#B8874F"/>
+      </svg>
+      Averun
+    </a>
+    <ul class="nav-links nav-mobile-hide">
+      <li><a href="#pillars">Product</a></li>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="#privacy">Privacy</a></li>
+    </ul>
+    <a href="#early-access" class="nav-cta">Join early access</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Communication &amp; Understanding</span>
+        <h1>Say what you mean.<br>Understand what's <em>meant</em>.</h1>
+        <p class="hero-sub">Averun helps autistic people express themselves clearly, make sense of ambiguous social language, and move through routines with less friction — always in their own words, on their own terms.</p>
+        <div class="hero-actions">
+          <a href="#early-access" class="btn-primary">Join early access</a>
+          <a href="#pillars" class="btn-secondary">See how it works</a>
+        </div>
+        <p class="hero-note">Built with autistic people, not just for them. Not a diagnostic or clinical tool.</p>
+      </div>
+
+      <div class="translate-card" role="group" aria-label="Example of social-context translation">
+        <div class="translate-card-label">Try it — tap a line</div>
+
+        <div class="bubble bubble-said" tabindex="0" role="button" aria-pressed="false" id="bubble1">
+          "We should hang out sometime."
+        </div>
+        <div class="bubble-arrow">↓ context translated</div>
+        <div class="bubble bubble-meant" id="meant1" tabindex="0" role="button" aria-expanded="false">
+          <span>Tap to reveal likely meaning</span>
+          <span class="meant-text">Usually a polite, low-commitment phrase — not a concrete invitation. If you want plans, it's fine to ask directly: "Would you want to grab coffee next week?"</span>
+        </div>
+        <p class="bubble-hint">Averun explains the gap between what's said and what's usually meant — then lets you choose how to respond.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pillars" class="wrap">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">What it does</span>
+      <h2>Three kinds of support, one thread running through them</h2>
+      <p class="section-sub">Every part of Averun exists to close the same gap: between what you mean and what gets understood, in both directions.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar reveal">
+        <svg class="pillar-icon" viewBox="0 0 40 40" fill="none"><rect x="3" y="3" width="34" height="34" rx="10" fill="#E3E8DE"/><path d="M12 16h16M12 20h16M12 24h10" stroke="#33645A" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="pillar-tag">Express</span>
+        <h3>Find the words, in your voice</h3>
+        <p>Compose messages, requests, or explanations with support that adapts to how you naturally communicate — not a generic script. Save phrases you use often and reuse them instantly, AAC-style, across text, email, or in-person prompts.</p>
+      </div>
+
+      <div class="pillar reveal">
+        <svg class="pillar-icon" viewBox="0 0 40 40" fill="none"><rect x="3" y="3" width="34" height="34" rx="10" fill="#F1E6D4"/><path d="M12 14l8 8-8 8M20 14l8 8-8 8" stroke="#B8874F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="pillar-tag">Translate</span>
+        <h3>Decode social context, on demand</h3>
+        <p>Idioms, sarcasm, indirect requests, unwritten social rules — Averun breaks down what's likely meant in plain, literal terms, and helps you decide how (or whether) to respond, without judgment either way.</p>
+      </div>
+
+      <div class="pillar reveal">
+        <svg class="pillar-icon" viewBox="0 0 40 40" fill="none"><rect x="3" y="3" width="34" height="34" rx="10" fill="#E3E8DE"/><circle cx="20" cy="20" r="8" stroke="#33645A" stroke-width="2"/><path d="M20 16v4l3 2" stroke="#33645A" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="pillar-tag">Anchor</span>
+        <h3>Steady footing through routine and change</h3>
+        <p>Prepare scripts for appointments, interviews, or unfamiliar situations ahead of time. When a routine shifts, Averun helps you break the change into concrete, predictable steps instead of one overwhelming unknown.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="approach" class="approach">
+    <div class="wrap">
+      <div class="approach-grid">
+        <div class="reveal">
+          <span class="section-eyebrow">Our approach</span>
+          <h2>Support, not correction</h2>
+          <p class="section-sub">Averun doesn't try to make anyone communicate "more normally." It gives you information and options — you decide what to do with them.</p>
+        </div>
+        <ul class="approach-list reveal">
+          <li><strong>Co-designed, not assumed.</strong> We build features with input from autistic people and their families at every stage, not just user testing after the fact.</li>
+          <li><strong>Your voice stays yours.</strong> Suggestions are optional starting points, never scripts you're pushed to follow.</li>
+          <li><strong>No masking pressure.</strong> Averun explains neurotypical social context without implying it's the "right" way to communicate.</li>
+          <li><strong>Plain language, always.</strong> No jargon, no vague hints — explanations are concrete and literal by default.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy" class="wrap">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Trust &amp; privacy</span>
+      <h2>Communication data is sensitive. We treat it that way.</h2>
+    </div>
+    <div class="privacy-grid">
+      <div class="privacy-item reveal">
+        <h4>You control what's stored</h4>
+        <p>Saved phrases, scripts, and history are visible and deletable at any time. Nothing is kept "just in case."</p>
+      </div>
+      <div class="privacy-item reveal">
+        <h4>Never sold, never used to profile</h4>
+        <p>Your conversations and context aren't sold to advertisers or used to build a marketing profile of you.</p>
+      </div>
+      <div class="privacy-item reveal">
+        <h4>Clear, opt-in consent</h4>
+        <p>Every feature that stores or shares data is explained plainly before it's turned on — no dark patterns, no default opt-ins.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="early-access reveal" id="early-access">
+      <span class="section-eyebrow early-access-eyebrow">Early access</span>
+      <h2>Help us build this with you</h2>
+      <p class="section-sub">We're building Averun's first product — communication and understanding support — in close contact with early users. Join the list to try it early and help shape it.</p>
+      <form class="signup" id="signup-form">
+        <label for="email" class="visually-hidden" style="position:absolute;left:-9999px;">Email address</label>
+        <input type="email" id="email" name="email" placeholder="you@email.com" required>
+        <button type="submit">Join early access</button>
+      </form>
+      <p class="form-note" id="form-note">We'll only email you about Averun. No spam, unsubscribe anytime. (Connect this form to a service like Formspree or Tally before publishing — see note in the code.)</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Averun</div>
+        <p class="footer-tag">Human-centered AI that helps people communicate, understand, and flourish.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#pillars">Product</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="mailto:hello@averun.app">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Averun. All rights reserved.</span>
+      <span>Not a medical or diagnostic product.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal-on-scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Signature translation card interaction
+  const meant1 = document.getElementById('meant1');
+  function toggleReveal(el){
+    const isOpen = el.classList.toggle('revealed');
+    el.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
+  meant1.addEventListener('click', () => toggleReveal(meant1));
+  meant1.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      toggleReveal(meant1);
+    }
+  });
+
+  // Signup form (placeholder — wire to a real form service before going live)
+  const form = document.getElementById('signup-form');
+  const note = document.getElementById('form-note');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    note.textContent = "Thanks — you're on the list. (Replace this handler with a real form service before publishing.)";
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
